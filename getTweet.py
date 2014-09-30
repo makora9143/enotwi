@@ -74,7 +74,10 @@ def get_tweet(latlngs, dirname='tweets/'):
             sleep(10)
 
 def main():
-    get_tweet()
+    get_tweet([
+        139, 20.42, 148.75, 45.42, 132,
+        20.42, 139, 39, 129, 20.42, 132, 35, 122.93, 20.42,
+        129, 33])
 
 
 if __name__ == '__main__':

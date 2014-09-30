@@ -17,6 +17,9 @@ class MecabHelpler(object):
 	def add_text(self, text):
 		self._data.append(text)
 
+	def replace_texts(self, texts):
+		self._data = texts
+
 	def get_texts(self):
 		return self._data
 

@@ -1,7 +1,8 @@
 #! /usr/bin/env python
 #-*- encoding: utf-8 -*-
 
-"""GetTweet
+u"""GetTweet
+
 江ノ島近郊ツイート取得モジュール
 
 """
@@ -11,24 +12,25 @@ import os
 from time import localtime, strftime, sleep
 from tweepy.streaming import StreamListener, Stream
 from tweepy.auth import OAuthHandler
+from twitteroauth import TwitterOauth
 
 
 class AbstractListener(StreamListener):
-    """StreamListenerのラッパー"""
+    u"""StreamListenerのラッパー"""
     def __init__(self, dirname):
         self.dirname = dirname
         if not os.path.isdir(self.dirname):
             os.mkdir(self.dirname)
 
     def on_data(self, data):
-        """ json形式の確認とファイルに書き出し """
+        u"""json形式の確認とファイルに書き出し"""
         if data.startswith("{"):
             json_data = json.loads(data)
             if json_data['id_str'] and json_data['geo']:
                 self.output_to_file(data)
 
     def output_to_file(self, data):
-        """ json形式でファイルに出力 """
+        u"""json形式でファイルに出力"""
         json_file = ("%s%s.json"
                     % (self.dirname, strftime("%Y%m%d%H%M", localtime())))
         with open(json_file, 'a') as f:
@@ -36,20 +38,18 @@ class AbstractListener(StreamListener):
 
 
 def log_message(level, message):
+    u"""ログメッセージを表示する"""
     t = strftime("%Y-%m-%d %H:%M:%S", localtime())
     str = t + ' [' + level + ']: ' + message
     return str
 
 
 def get_oauth():
-    consumer_key = ''
-    consumer_secret = ''
-    access_key = ''
-    access_secret = ''
-    consumer_key = 'c6a9NIWzkHIs5Lxo7wgc9w'
-    consumer_secret = 'Xf7gAMCrZMq6AkgUk7uGMeSIbtYUDGzOsZ8pz1CXE'
-    access_key = '133119533-YqpDDbh466kTcs8cSaSuvIKC0JY63F1vrp2O1cJ7'
-    access_secret = '9aqYuxTVJi2fsbMrBoL5UcMBPyfUjMERLvScRP6pyQ'
+    oauth = TwitterOauth()
+    consumer_key = oauth.get_consumer_key()
+    consumer_secret = oauth.get_consumer_secret()
+    access_key = oauth.get_access_key() 
+    access_secret = oauth.get_access_secret()
     oauth = OAuthHandler(consumer_key, consumer_secret)
     oauth.set_access_token(access_key, access_secret)
     return oauth

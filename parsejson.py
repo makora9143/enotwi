@@ -25,7 +25,7 @@ class ParseJson(object):
         for i in xrange(HOUR):
             filetime = hour_ago + timedelta(minutes=i)
             filename = filetime.strftime("%Y%m%d%H%M.json")
-            self._fileset.append(filename)
+            self._fileset.append('./tweets/' + filename)
 
     def get_fileset(self):
         """ファイルセットを取得"""
@@ -37,14 +37,14 @@ class ParseJson(object):
         with open(filename) as f:
             for line in f:
                 tweets.append(json.loads(line))
-        return tweets 
+        return tweets
 
     def parse_text_from_json(self, filename):
         """ツイートの本文を抜き出して返す"""
         tweets = self.load_one_json(filename)
         texts = []
         for tweet in tweets:
-            texts.append(tweet.get('text'))
+            texts.append(tweet.get('text').encode('utf-8'))
         return texts
 
     def load_all_json(self):

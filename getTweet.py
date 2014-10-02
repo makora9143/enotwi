@@ -32,7 +32,7 @@ class AbstractListener(StreamListener):
     def output_to_file(self, data):
         u"""json形式でファイルに出力"""
         json_file = ("%s%s.json"
-                    % (self.dirname, strftime("%Y%m%d%H%M", localtime())))
+                     % (self.dirname, strftime("%Y%m%d%H%M", localtime())))
         with open(json_file, 'a') as f:
             f.write(data)
 
@@ -48,7 +48,7 @@ def get_oauth():
     oauth = TwitterOauth()
     consumer_key = oauth.get_consumer_key()
     consumer_secret = oauth.get_consumer_secret()
-    access_key = oauth.get_access_key() 
+    access_key = oauth.get_access_key()
     access_secret = oauth.get_access_secret()
     oauth = OAuthHandler(consumer_key, consumer_secret)
     oauth.set_access_token(access_key, access_secret)
@@ -56,7 +56,6 @@ def get_oauth():
 
 
 def start_crawl(latlngs, dirname):
-    start_time = strftime("%Y-%m-%d %H:%M:%S", localtime())
     print log_message('INFO', 'crawling start')
     oauth = get_oauth()
     streming = Stream(oauth, AbstractListener(dirname), secure=True)
@@ -72,6 +71,7 @@ def get_tweet(latlngs, dirname='tweets/'):
         except Exception, e:
             print log_message('ERR', str(e))
             sleep(10)
+
 
 def main():
     get_tweet([

@@ -54,3 +54,8 @@ class MecabHelpler(object):
 
 if __name__ == '__main__':
     mecab = MecabHelpler()
+    mecab.add_text("Webデザインの流行りを知るために、トレンド感のある配色や洗練"
+                   "されたレイアウトをつくり上げるために、"
+                   "知っておきたいことや方法など。")
+    mecab.count_words()
+    mecab.show_result()

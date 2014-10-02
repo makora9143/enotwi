@@ -4,11 +4,12 @@
 """タグクラウド生成クラス
 
 PerlのHTML::TagCloud参考
-
 """
 
 import math
 import random
+
+BASE_FONT_SIZE = 12
 
 
 class TagCloud(object):
@@ -28,7 +29,7 @@ class TagCloud(object):
         self.counts[tag] = count
 
     def css_for_tag(self, level, subclass):
-        font = 12 + level
+        font = BASE_FONT_SIZE + level
         return ("span.tagcloud%d%s {font-size: %dpx;}\n"
                 "span.tagcloud%d%s a{text-decoration: none;}\n"
                 % (level, subclass, font, level, subclass))
